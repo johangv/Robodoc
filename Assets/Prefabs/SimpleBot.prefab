@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 4773187560251631428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.22, y: -3.602, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7179635, y: 1.7179635, z: 1.7179635}
   m_Children:
   - {fileID: 3064331468020790021}
   - {fileID: 7342995222726560662}
@@ -214,7 +214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  groundCheck: {fileID: 0}
+  timeStart: 60
+  groundCheck: {fileID: 3064331468020790021}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 3072
 --- !u!1 &8776325564270572117
 GameObject:
   m_ObjectHideFlags: 0

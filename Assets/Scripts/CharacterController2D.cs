@@ -47,6 +47,7 @@ public class CharacterController2D : MonoBehaviour {
 	bool facingRight = true;
 	bool isGrounded = false;
 	bool isRunning = false;
+    bool isHitting = false;
 
 	// store the layer the player is on (setup in Awake)
 	int _playerLayer;
@@ -135,8 +136,22 @@ public class CharacterController2D : MonoBehaviour {
 		// if moving up then don't collide with platform layer
 		// this allows the player to jump up through things on the platform layer
 		// NOTE: requires the platforms to be on a layer named "Platform"
-		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f)); 
-	}
+		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f));
+
+        //If the player is pressing the hitting button
+        if (Input.GetButtonDown("Fire1"))
+        {
+            isHitting = true;
+        }
+        else
+        {
+            isHitting = false;
+        }
+
+        //Set the hitting animation states
+        _animator.SetBool("Attacking", isHitting);
+
+    }
 
 	// Checking to see if the sprite should be flipped
 	// this is done in LateUpdate since the Animator may override the localScale
