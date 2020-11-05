@@ -17,6 +17,14 @@ public class CharacterController2D : MonoBehaviour {
 
 	public HealthBar healthBar;
 
+	// player energy
+	public int maxEnergy = 100;
+	public int initialEnergy = 0;
+	public int currentEnergy;
+
+	public EnergyBar energyBar;
+
+
 	// LayerMask to determine what is considered ground for the player
 	public LayerMask whatIsGround;
 
@@ -90,15 +98,19 @@ public class CharacterController2D : MonoBehaviour {
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
 
+		currentEnergy = initialEnergy;
+		energyBar.SetMaxEnergy(maxEnergy, initialEnergy);
+
 	}
 
     // this is where most of the player controller magic happens each game event loop
     void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.Space))
-        //{
-			//TakeDamage(20);
-        //}
+		if (Input.GetKeyDown(KeyCode.F))
+        {
+			chargeEnergy(10);
+        }
+
 
 		// exit update if player cannot move or game is paused
 		if (!playerCanMove || (Time.timeScale == 0f))
@@ -156,11 +168,11 @@ public class CharacterController2D : MonoBehaviour {
 
     }
 
-	void TakeDamage(int damage)
+	void chargeEnergy(int energy)
     {
-		currentHealth -= damage;
+		currentEnergy += energy;
 
-		healthBar.SetHealth(currentHealth);
+		energyBar.SetEnergy(currentEnergy);
     }
 
 	// Checking to see if the sprite should be flipped

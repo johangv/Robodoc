@@ -21,6 +21,7 @@ public class PlayerCombatController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+
     private void Update()
     {
         if(Time.time >= nextAttackTime)
@@ -53,5 +54,4 @@ public class PlayerCombatController : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-
 }
