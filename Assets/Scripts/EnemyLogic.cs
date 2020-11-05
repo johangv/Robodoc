@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyLogic : MonoBehaviour
 {
+    //Variables for combat mechanics
+    public int maxHealth = 6;
+    int currentHealth;
+
+
     public float speed;
     public float timeStart = 60;
 
@@ -40,7 +45,11 @@ public class EnemyLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Obtain the rigidBody component from the enemy
         _rigidbody = GetComponent<Rigidbody2D>();
+
+        //Initialize the Health of the enemy
+        currentHealth = maxHealth;
 
     }
 
@@ -65,6 +74,7 @@ public class EnemyLogic : MonoBehaviour
 
         // Determine the ground's specified layer
         _GroundLayer = LayerMask.NameToLayer("Ground");
+
     }
 
 
@@ -87,7 +97,7 @@ public class EnemyLogic : MonoBehaviour
 
         _animator.SetBool("Walk", isWalking);
 
-        //If the enemy es on the ground
+        //If the enemy is on the ground
         // get the current vertical velocity from the rigidbody component
         _vy = _rigidbody.velocity.y;
 
@@ -139,5 +149,35 @@ public class EnemyLogic : MonoBehaviour
             this.transform.localScale = new Vector2(this.transform.localScale.x * -1, this.transform.localScale.y);
         }
     }
+
+    //Damage method for enemy
+    public void TakeDamage(int damage)
+    {
+        //When the enemy receive damage
+        currentHealth -= damage;
+
+        //Play hurt animation
+        _animator.SetTrigger("Hurt");
+
+        //If the enemy miss all of his health point so enemy die
+        if(currentHealth <= 0)
+        {
+            Die();
+        } 
+
+    }
+
+    //When the enemy die
+    void Die()
+    {
+        Debug.Log("Enemy died!");
+
+        //Die animation
+        _animator.SetBool("IsDead", true);
+
+        //Disable the enemy
+        speed = 0;
+    }
+
 
 }

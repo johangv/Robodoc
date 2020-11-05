@@ -138,19 +138,6 @@ public class CharacterController2D : MonoBehaviour {
 		// NOTE: requires the platforms to be on a layer named "Platform"
 		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f));
 
-        //If the player is pressing the hitting button
-        if (Input.GetButtonDown("Fire1"))
-        {
-            isHitting = true;
-        }
-        else
-        {
-            isHitting = false;
-        }
-
-        //Set the hitting animation states
-        _animator.SetBool("Attacking", isHitting);
-
     }
 
 	// Checking to see if the sprite should be flipped
@@ -160,9 +147,8 @@ public class CharacterController2D : MonoBehaviour {
 	{
 		// get the current scale
 		Vector3 localScale = _transform.localScale;
-
 		if (_vx > 0) // moving right so face right
-		{
+        {
 			facingRight = true;
 		} else if (_vx < 0) { // moving left so face left
 			facingRight = false;
@@ -283,4 +269,6 @@ public class CharacterController2D : MonoBehaviour {
 		_transform.position = spawnloc;
 		_animator.SetTrigger("Respawn");
 	}
+
+
 }

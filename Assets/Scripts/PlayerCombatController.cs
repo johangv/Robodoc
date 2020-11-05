@@ -4,59 +4,54 @@ using UnityEngine;
 
 public class PlayerCombatController : MonoBehaviour
 {
-    [SerializeField]
-    private bool combatEnabled;
-    [SerializeField]
-    private float inputTimer;
+    Animator anim;
+    public Transform attackPoint;
+    public LayerMask enemyLayers;
 
-    private bool InputState, isAttacking;
+    public float attackRange = 0.5f;
+    public int attackDamage = 3;
 
-    private float lastInputTime;
+    public float attackRate = 2f;
+    float nextAttackTime = 0f;
 
-    private Animator anim;
 
-
-    private void Start()
+    private void Awake()
     {
+        //Obtain the animator component of the player
         anim = GetComponent<Animator>();
-        anim.SetBool("CanAttack", combatEnabled);
     }
 
     private void Update()
     {
-        CheckCombatInput();
-        CheckAttacks();
-    }
-
-    private void CheckCombatInput()
-    {
-        if (combatEnabled)
+        if(Time.time >= nextAttackTime)
         {
-            //Atemp combat
-            InputState = true;
-            lastInputTime = Time.time;
-        }
-    }
-
-    private void CheckAttacks()
-    {
-        if (InputState)
-        {
-            //Perform attack
-            if (!isAttacking)
+            if (Input.GetButtonDown("Fire1"))
             {
-                InputState = false;
-                isAttacking = true;
-                anim.SetBool("Attacking", isAttacking);
+                Attack();
+                nextAttackTime = Time.time + 1f / attackRate;
             }
         }
+    }
 
-        if (Time.time >= lastInputTime + inputTimer)
+    void Attack()
+    {
+        //Play an attack animation
+        anim.SetTrigger("Attack");
+        //Detect enemies in range of attack
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        //Damage the enemies
+        foreach(Collider2D enemy in hitEnemies)
         {
-            //Wait for new inputs
-            InputState = false;
+            enemy.GetComponent<EnemyLogic>().TakeDamage(attackDamage);
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
 
 }

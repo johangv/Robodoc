@@ -271,13 +271,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
-      propertyPath: jumpForce
-      value: 600
+    - target: {fileID: 489630001648573409, guid: 2063864d953c61b43becc7d18d4d8663,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.7236364
       objectReference: {fileID: 0}
-    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
-      propertyPath: moveSpeed
-      value: 5
+    - target: {fileID: 489630001648573409, guid: 2063864d953c61b43becc7d18d4d8663,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.19
       objectReference: {fileID: 0}
     - target: {fileID: 489630001648573412, guid: 2063864d953c61b43becc7d18d4d8663,
         type: 3}
@@ -437,6 +439,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1632935715, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -514,7 +520,7 @@ PrefabInstance:
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3325124
+      value: -3.3239102
       objectReference: {fileID: 0}
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}
