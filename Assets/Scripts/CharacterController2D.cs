@@ -12,6 +12,10 @@ public class CharacterController2D : MonoBehaviour {
 
 	// player health
 	public int playerHealth = 1;
+	public int maxHealth = 100;
+	public int currentHealth;
+
+	public HealthBar healthBar;
 
 	// LayerMask to determine what is considered ground for the player
 	public LayerMask whatIsGround;
@@ -81,9 +85,21 @@ public class CharacterController2D : MonoBehaviour {
 		_platformLayer = LayerMask.NameToLayer("Platform");
 	}
 
-	// this is where most of the player controller magic happens each game event loop
-	void Update()
+    void Start()
+    {
+		currentHealth = maxHealth;
+		healthBar.SetMaxHealth(maxHealth);
+
+	}
+
+    // this is where most of the player controller magic happens each game event loop
+    void Update()
 	{
+		//if (Input.GetKeyDown(KeyCode.Space))
+        //{
+			//TakeDamage(20);
+        //}
+
 		// exit update if player cannot move or game is paused
 		if (!playerCanMove || (Time.timeScale == 0f))
 			return;
@@ -140,6 +156,13 @@ public class CharacterController2D : MonoBehaviour {
 
     }
 
+	void TakeDamage(int damage)
+    {
+		currentHealth -= damage;
+
+		healthBar.SetHealth(currentHealth);
+    }
+
 	// Checking to see if the sprite should be flipped
 	// this is done in LateUpdate since the Animator may override the localScale
 	// this code will flip the player even if the animator is controlling scale
@@ -171,6 +194,11 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.tag=="MovingPlatform")
 		{
 			this.transform.parent = other.transform;
+		}
+		if (other.gameObject.tag == "Enemy")
+        {
+			ApplyDamage(20);
+			Debug.Log("enemy collision");
 		}
 	}
 
@@ -205,9 +233,12 @@ public class CharacterController2D : MonoBehaviour {
 	// public function to apply damage to the player
 	public void ApplyDamage (int damage) {
 		if (playerCanMove) {
-			playerHealth -= damage;
 
-			if (playerHealth <= 0) { // player is now dead, so start dying
+			playerHealth -= damage;
+			currentHealth -= damage;
+			healthBar.SetHealth(currentHealth);
+
+			if (currentHealth <= 0) { // player is now dead, so start dying
 				PlaySound(deathSFX);
 				StartCoroutine (KillPlayer ());
 			}
