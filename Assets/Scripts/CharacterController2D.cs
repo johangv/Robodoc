@@ -225,7 +225,7 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.CompareTag("Batery"))
 		{
 			Debug.Log("Toca a la batería");
-			chargeEnergy(15);
+			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
 	}
