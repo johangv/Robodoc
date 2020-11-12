@@ -106,11 +106,6 @@ public class CharacterController2D : MonoBehaviour {
     // this is where most of the player controller magic happens each game event loop
     void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.F))
-        {
-			chargeEnergy(10);
-        }
-
 
 		// exit update if player cannot move or game is paused
 		if (!playerCanMove || (Time.timeScale == 0f))
@@ -169,11 +164,11 @@ public class CharacterController2D : MonoBehaviour {
     }
 
 	void chargeEnergy(int energy)
-    {
+	{
 		currentEnergy += energy;
 
 		energyBar.SetEnergy(currentEnergy);
-    }
+	}
 
 	// Checking to see if the sprite should be flipped
 	// this is done in LateUpdate since the Animator may override the localScale
@@ -223,8 +218,19 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-	// do what needs to be done to freeze the player
- 	void FreezeMotion() {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+		// CollectBatery(other);
+		if (other.gameObject.CompareTag("Batery"))
+		{
+			Debug.Log("Toca a la batería");
+			chargeEnergy(20);
+			Destroy(other.gameObject);
+		}
+	}
+
+    // do what needs to be done to freeze the player
+    void FreezeMotion() {
 		playerCanMove = false;
         _rigidbody.velocity = new Vector2(0,0);
 		_rigidbody.isKinematic = true;
@@ -287,11 +293,23 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-	public void CollectCoin(int amount) {
-		PlaySound(coinSFX);
+	public void CollectBatery(Collider2D other) {
+		// PlaySound(coinSFX);
 
-		if (GameManager.gm) // add the points through the game manager, if it is available
-			GameManager.gm.AddPoints(amount);
+		// if (GameManager.gm) // add the points through the game manager, if it is available
+			// GameManager.gm.AddPoints(amount);
+		if (other.gameObject.CompareTag("Batery"))
+        {
+			Destroy(other.gameObject);
+        }
+	}
+
+	public void CollectCoin(int amount)
+	{
+		 PlaySound(coinSFX);
+
+		 if (GameManager.gm) // add the points through the game manager, if it is available
+		 GameManager.gm.AddPoints(amount);
 	}
 
 	// public function on victory over the level

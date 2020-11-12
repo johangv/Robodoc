@@ -8,13 +8,6 @@ public class EnemyLogic : MonoBehaviour
     public int maxHealth = 6;
     int currentHealth;
 
-    // player energy
-    public int maxEnergy = 100;
-    public int initialEnergy = 0;
-    public int currentEnergy;
-
-    public EnergyBar energyBar;
-
 
     public float speed;
     public float timeStart = 60;
@@ -58,8 +51,6 @@ public class EnemyLogic : MonoBehaviour
         //Initialize the Health of the enemy
         currentHealth = maxHealth;
 
-        currentEnergy = initialEnergy;
-        energyBar.SetMaxEnergy(maxEnergy, initialEnergy);
     }
 
     void Awake()
@@ -172,7 +163,6 @@ public class EnemyLogic : MonoBehaviour
         if(currentHealth <= 0)
         {
             Die();
-            chargeEnergy(10);
         } 
 
     }
@@ -180,19 +170,13 @@ public class EnemyLogic : MonoBehaviour
     //When the enemy die
     void Die()
     {
-        Debug.Log("Enemy died!");
+        
 
         //Die animation
         _animator.SetBool("IsDead", true);
 
         //Disable the enemy
         speed = 0;
-    }
-    void chargeEnergy(int energy)
-    {
-        currentEnergy += energy;
-
-        energyBar.SetEnergy(currentEnergy);
     }
 
 }
