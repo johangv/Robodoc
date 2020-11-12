@@ -218,7 +218,8 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-    private void OnTriggerEnter2D(Collider2D other)
+	// Si el jugador recolecta baterías o tuercas
+	private void OnTriggerEnter2D(Collider2D other)
     {
 		// CollectBatery(other);
 		if (other.gameObject.CompareTag("Batery"))
