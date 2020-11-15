@@ -646,6 +646,10 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 842722372}
+    - target: {fileID: 1632935715, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+      propertyPath: tar
+      value: 
+      objectReference: {fileID: 1910889729}
     - target: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1128,6 +1132,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1910889729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 489630001648573412, guid: 2063864d953c61b43becc7d18d4d8663,
+    type: 3}
+  m_PrefabInstance: {fileID: 489630001380925748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1947364939 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5402517515255392555, guid: 70e8cbf36b716c149ae0fd4883880760,
@@ -1519,6 +1529,10 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 842722372}
+    - target: {fileID: 1632935715, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+      propertyPath: tar
+      value: 
+      objectReference: {fileID: 1910889729}
     - target: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1725,7 +1739,7 @@ PrefabInstance:
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3230405
+      value: -3.2196412
       objectReference: {fileID: 0}
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}

@@ -15,6 +15,12 @@ public class EnemyLogic : MonoBehaviour
     //Ground check
     public Transform groundCheck;
 
+    private Transform target;
+
+    public GameObject tar;  //Drag player game object to this in inspector
+
+
+
     // store references to components on the gameObject
     Transform _transform;
     Rigidbody2D _rigidbody;
@@ -51,6 +57,8 @@ public class EnemyLogic : MonoBehaviour
         //Initialize the Health of the enemy
         currentHealth = maxHealth;
 
+        target = tar.GetComponent<Transform>();
+
     }
 
     void Awake()
@@ -81,6 +89,9 @@ public class EnemyLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
         _rigidbody.velocity = new Vector2(speed, _rigidbody.velocity.y);
         // get the horizontal velocity from the rigidbody component
         _vx = _rigidbody.velocity.x;
@@ -99,18 +110,19 @@ public class EnemyLogic : MonoBehaviour
 
         //If the enemy is on the ground
         // get the current vertical velocity from the rigidbody component
-        _vy = _rigidbody.velocity.y;
+        _vy = _rigidbody.velocity.x;
 
         // Check to see if character is grounded by raycasting from the middle of the player
         // down to the groundCheck position and see if collected with gameobjects on the
         // whatIsGround layer
+
         isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);
 
         // Set the grounded animation states
         _animator.SetBool("Grounded", isGrounded);
 
 
-
+        
 
 
     }
@@ -119,6 +131,8 @@ public class EnemyLogic : MonoBehaviour
     {
         // get the current scale
         Vector3 localScale = _transform.localScale;
+
+        // transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
         if (_vx > 0) // moving right so face right
         {
