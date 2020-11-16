@@ -187,7 +187,7 @@ public class EnemyLogic : MonoBehaviour
         
 
         //Die animation
-        _animator.SetBool("IsDead", true);
+        _animator.SetTrigger("IsDead");
 
         //Disable the enemy
         speed = 0;
