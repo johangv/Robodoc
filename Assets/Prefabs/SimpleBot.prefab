@@ -214,9 +214,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
-  speed: 2
+  speed: 3
   timeStart: 60
   groundCheck: {fileID: 3064331468020790021}
+  tar: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 3072
@@ -264,7 +265,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000023841858, y: -0.28}
+  m_Offset: {x: 0.02, y: -0.5787952}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -275,5 +276,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45585012, y: 1}
+  m_Size: {x: 0.37979385, y: 0.81529033}
   m_EdgeRadius: 0
