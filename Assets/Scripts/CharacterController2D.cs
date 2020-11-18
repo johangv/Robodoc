@@ -142,8 +142,6 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
-			// play the jump sound
-			PlaySound(jumpSFX);
 		}
 	
 		// If the player stops jumping mid jump and player is not yet falling
@@ -194,30 +192,6 @@ public class CharacterController2D : MonoBehaviour {
 		_transform.localScale = localScale;
 	}
 
-	// if the player collides with a MovingPlatform, then make it a child of that platform
-	// so it will go for a ride on the MovingPlatform
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.tag=="MovingPlatform")
-		{
-			this.transform.parent = other.transform;
-		}
-		if (other.gameObject.tag == "Enemy")
-        {
-			ApplyDamage(20);
-			Debug.Log("enemy collision");
-		}
-	}
-
-	// if the player exits a collision with a moving platform, then unchild it
-	void OnCollisionExit2D(Collision2D other)
-	{
-		if (other.gameObject.tag=="MovingPlatform")
-		{
-			this.transform.parent = null;
-		}
-	}
-
 	// Si el jugador recolecta baterías o tuercas
 	private void OnTriggerEnter2D(Collider2D other)
     {
@@ -230,107 +204,13 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-    // do what needs to be done to freeze the player
-    void FreezeMotion() {
-		playerCanMove = false;
-        _rigidbody.velocity = new Vector2(0,0);
-		_rigidbody.isKinematic = true;
-	}
-
-	// do what needs to be done to unfreeze the player
-	void UnFreezeMotion() {
-		playerCanMove = true;
-		_rigidbody.isKinematic = false;
-	}
-
-	// play sound through the audiosource on the gameobject
-	void PlaySound(AudioClip clip)
-	{
-		_audio.PlayOneShot(clip);
-	}
-
-	// public function to apply damage to the player
-	public void ApplyDamage (int damage) {
-		if (playerCanMove) {
-
-			playerHealth -= damage;
-			currentHealth -= damage;
-			healthBar.SetHealth(currentHealth);
-
-			if (currentHealth <= 0) { // player is now dead, so start dying
-				PlaySound(deathSFX);
-				StartCoroutine (KillPlayer ());
-			}
-		}
-	}
-
-	// public function to kill the player when they have a fall death
-	public void FallDeath () {
-		if (playerCanMove) {
-			playerHealth = 0;
-			PlaySound(fallSFX);
-			StartCoroutine (KillPlayer ());
-		}
-	}
-
-	// coroutine to kill the player
-	IEnumerator KillPlayer()
-	{
-		if (playerCanMove)
-		{
-			// freeze the player
-			FreezeMotion();
-
-			// play the death animation
-			_animator.SetTrigger("Death");
-			
-			// After waiting tell the GameManager to reset the game
-			yield return new WaitForSeconds(2.0f);
-
-			if (GameManager.gm) // if the gameManager is available, tell it to reset the game
-				GameManager.gm.ResetGame();
-			else // otherwise, just reload the current level
-				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		}
-	}
 
 	public void CollectBatery(Collider2D other) {
-		// PlaySound(coinSFX);
 
-		// if (GameManager.gm) // add the points through the game manager, if it is available
-			// GameManager.gm.AddPoints(amount);
 		if (other.gameObject.CompareTag("Batery"))
         {
 			Destroy(other.gameObject);
         }
 	}
-
-	public void CollectCoin(int amount)
-	{
-		 PlaySound(coinSFX);
-
-		 if (GameManager.gm) // add the points through the game manager, if it is available
-		 GameManager.gm.AddPoints(amount);
-	}
-
-	// public function on victory over the level
-	public void Victory() {
-		PlaySound(victorySFX);
-		FreezeMotion ();
-		_animator.SetTrigger("Victory");
-
-		if (GameManager.gm) // do the game manager level compete stuff, if it is available
-			GameManager.gm.LevelCompete();
-	}
-
-	// public function to respawn the player at the appropriate location
-	public void Respawn(Vector3 spawnloc) {
-		UnFreezeMotion();
-		playerHealth = 1;
-		_transform.parent = null;
-		_transform.position = spawnloc;
-		_animator.SetTrigger("Respawn");
-	}
-
 
 }

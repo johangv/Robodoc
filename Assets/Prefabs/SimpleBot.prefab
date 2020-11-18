@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1802691875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1802691876}
+  m_Layer: 9
+  m_Name: wallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1802691876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802691875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.34, y: 0.72, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4773187560251631425}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &256659008758023768
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256659008758023768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.032, y: -0.073, z: 0}
+  m_LocalPosition: {x: 0.46, y: -0.073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4773187560251631425}
@@ -44,7 +74,6 @@ GameObject:
   - component: {fileID: 8892769512639239729}
   - component: {fileID: 7127159274898464935}
   - component: {fileID: 1632935710}
-  - component: {fileID: 1632935715}
   m_Layer: 9
   m_Name: SimpleBot
   m_TagString: Enemy
@@ -61,10 +90,11 @@ Transform:
   m_GameObject: {fileID: 4773187560251631428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.22, y: -3.602, z: 0}
-  m_LocalScale: {x: 1.7179635, y: 1.7179635, z: 1.7179635}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3064331468020790021}
   - {fileID: 7342995222726560662}
+  - {fileID: 1802691876}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,26 +231,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1632935715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4773187560251631428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f1664209994a04da1894dfa4dc767c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 6
-  speed: 3
-  timeStart: 60
-  groundCheck: {fileID: 3064331468020790021}
-  tar: {fileID: 0}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 3072
 --- !u!1 &8776325564270572117
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,12 +242,12 @@ GameObject:
   - component: {fileID: 7342995222726560662}
   - component: {fileID: 3008748531086881774}
   m_Layer: 9
-  m_Name: DroundDetect
+  m_Name: GroundDetect
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7342995222726560662
 Transform:
   m_ObjectHideFlags: 0

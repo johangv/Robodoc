@@ -4,38 +4,7 @@ using UnityEngine;
 
 public class EnemyLogic : MonoBehaviour
 {
-    //Variables for combat mechanics
-    public int maxHealth = 6;
-    int currentHealth;
-
-
-    public float speed;
-    public float timeStart = 60;
-
-    //Ground check
-    public Transform groundCheck;
-
-    private Transform target;
-
-    public GameObject tar;  //Drag player game object to this in inspector
-
-
-
-    // store references to components on the gameObject
-    Transform _transform;
-    Rigidbody2D _rigidbody;
-    Animator _animator;
-
-
-    // Enemy tracking
-    bool facingRight = true;
-    bool isGrounded = false;
-    bool isWalking = false;
-
-    // hold enemy motion in this timestep
-    float _vx;
-    float _vy;
-
+    
     // store the layer the enemy is on (setup in Awake)
     int _EnemyLayer;
 
@@ -45,35 +14,80 @@ public class EnemyLogic : MonoBehaviour
     // number of layer that Ground are on (setup in Awake)
     int _GroundLayer;
 
+    private GameObject SimpleBot;
+    private Rigidbody2D _rigidbody;
+    private Animator _animator;
+
+    //Enemy animations
+    [SerializeField]
+    private GameObject
+        hitParticle,
+        deathChunkParticle,
+        deathBloodParticle;
+
+    private enum State
+    {
+        Moving,
+        Knockback,
+        dead
+    }
+    private State currentState;
+
+    [SerializeField]
+    private float
+        groundCheckDistance,
+        wallCheckDistance,
+        movementSpeed,
+        maxHealth,
+        knockbackDuration;
+
+    [SerializeField]
+    private Transform
+        groundCheck,
+        wallCheck;
+
+    private int
+        facingDirection,
+        damageDirection;
+
+    private Vector2 movement;
+
+    private bool
+        groundDetected,
+        wallDetected,
+        isDamaged;
+
+    [SerializeField]
     // LayerMask to determine what is considered ground for the enemy
     public LayerMask whatIsGround;
 
+    [SerializeField]
+    private Vector2 knockbackSpeed;
+
+    private float
+        currentHealth,
+        knockbackStartTime;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //Obtain the rigidBody component from the enemy
-        _rigidbody = GetComponent<Rigidbody2D>();
+        
 
         //Initialize the Health of the enemy
         currentHealth = maxHealth;
 
-        target = tar.GetComponent<Transform>();
+      //target = tar.GetComponent<Transform>();
+
+        SimpleBot = transform.Find("SimpleBot").gameObject;
+        _rigidbody = SimpleBot.GetComponent<Rigidbody2D>();
+        _animator = SimpleBot.GetComponent<Animator>();
+        facingDirection = 1;
 
     }
 
-    void Awake()
+    private void Awake()
     {
-        // get a reference to the components we are going to be changing and store a reference for efficiency purposes
-        _transform = GetComponent<Transform>();
-
-        _rigidbody = GetComponent<Rigidbody2D>();
-        if (_rigidbody == null) // if Rigidbody is missing
-            Debug.LogError("Rigidbody2D component missing from this gameobject");
-
-        _animator = GetComponent<Animator>();
-        if (_animator == null) // if Animator is missing
-            Debug.LogError("Animator component missing from this gameobject");
-
+        
         // determine the Enemy specified layer
         _EnemyLayer = this.gameObject.layer;
 
@@ -87,110 +101,174 @@ public class EnemyLogic : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+      
+        //WATH STATE IS ACTIVED-----------------------------------------------------------------------------------------------------------------------------
 
-        // transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        _rigidbody.velocity = new Vector2(speed, _rigidbody.velocity.y);
-        // get the horizontal velocity from the rigidbody component
-        _vx = _rigidbody.velocity.x;
-
-        // Determine if walking based on the horizontal movement
-        if (_vx != 0)
+        switch (currentState)
         {
-            isWalking = true;
+            case State.Moving:
+                UpdateMovingState();
+                break;
+            case State.Knockback:
+                UpdateKnockbackState();
+                break;
+            case State.dead:
+                UpdateDeadState();
+                break;
+        }
+
+    }
+
+    //START ENEMY CONTROLLER---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //..WALKING STATE-------------------------------------
+
+    private void EnterMovingState()
+    {
+       
+    }
+
+    private void UpdateMovingState()
+    {
+        groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+        wallDetected = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
+
+        if (!groundDetected || wallDetected)
+        {
+            Flip();
         }
         else
         {
-            isWalking = false;
+            movement.Set(movementSpeed * facingDirection, _rigidbody.velocity.y);
+            _rigidbody.velocity = movement;
         }
-
-        _animator.SetBool("Walk", isWalking);
-
-        //If the enemy is on the ground
-        // get the current vertical velocity from the rigidbody component
-        _vy = _rigidbody.velocity.x;
-
-        // Check to see if character is grounded by raycasting from the middle of the player
-        // down to the groundCheck position and see if collected with gameobjects on the
-        // whatIsGround layer
-
-        isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);
-
-        // Set the grounded animation states
-        _animator.SetBool("Grounded", isGrounded);
-
-
-        
-
-
     }
 
-    private void LateUpdate()
-    {
-        // get the current scale
-        Vector3 localScale = _transform.localScale;
-
-        // transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        if (_vx > 0) // moving right so face right
-        {
-            facingRight = true;
-        }
-        else if (_vx < 0)
-        { // moving left so face left
-            facingRight = false;
-        }
-
-        // check to see if scale x is right for the player
-        // if not, multiple by -1 which is an easy way to flip a sprite
-        if (((facingRight) && (localScale.x < 0)) || ((!facingRight) && (localScale.x > 0)))
-        {
-            localScale.x *= -1;
-        }
-
-        // update the scale
-        _transform.localScale = localScale;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
+    private void ExitMovingState()
     {
 
-        if (other.gameObject.tag == "Ground")
+    }
+
+    //..KNOCKBACK STATE-------------------------------------
+
+    private void EnterKnockbackState()
+    {
+            knockbackStartTime = Time.time;
+            movement.Set(knockbackSpeed.x * damageDirection, knockbackSpeed.y);
+            _rigidbody.velocity = movement;
+            _animator.SetBool("Knockback", true);
+            isDamaged = !isDamaged;
+    }
+
+    private void UpdateKnockbackState()
+    {
+        if (Time.time >= knockbackStartTime + knockbackDuration)
+            SwitchState(State.Moving);
+    }
+
+    private void ExitKnockbackState()
+    {
+        _animator.SetBool("Knockback", false);
+        isDamaged = !isDamaged;
+    }
+
+    //..DEAD STATE-------------------------------------
+
+    private void EnterDeadState()
+    {
+        //Switch dead animation
+        Destroy(gameObject);
+    }
+
+    private void UpdateDeadState()
+    {
+
+    }
+
+    private void ExitDeadState()
+    {
+
+    }
+
+    //OTHER FUNCTIONS------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    private void Damage(float[] attackDetails)
+    {
+        if (!isDamaged)
         {
-            speed *= -1;
-            this.transform.localScale = new Vector2(this.transform.localScale.x * -1, this.transform.localScale.y);
+
+            currentHealth -= attackDetails[0];
+            Debug.Log(SimpleBot.transform.position.x);
+            Instantiate(hitParticle, SimpleBot.transform.position,
+                Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+
+            if (attackDetails[1] > SimpleBot.transform.position.x)
+            {
+                damageDirection = -1;
+            }
+            else
+            {
+                damageDirection = 1;
+            }           
         }
-    }
+        //Hit particle
 
-    //Damage method for enemy
-    public void TakeDamage(int damage)
-    {
-        //When the enemy receive damage
-        currentHealth -= damage;
-
-        //Play hurt animation
-        _animator.SetTrigger("Hurt");
-
-        //If the enemy miss all of his health point so enemy die
-        if(currentHealth <= 0)
+        if(currentHealth > 0.0f && !isDamaged)
         {
-            Die();
-        } 
-
+            SwitchState(State.Knockback);
+        }
+        else if(currentHealth <= 0.0f && !isDamaged)
+                {
+                    SwitchState(State.dead);
+                }
     }
 
-    //When the enemy die
-    void Die()
+    private void Flip()
     {
-        
-
-        //Die animation
-        _animator.SetTrigger("IsDead");
-
-        //Disable the enemy
-        speed = 0;
+        facingDirection *= -1;
+        SimpleBot.transform.Rotate(0.0f, 180.0f, 0.0f);
     }
 
+    private void SwitchState(State state)
+    {
+        switch (currentState)
+        {
+            case State.Moving:
+                ExitMovingState();
+                break;
+            case State.Knockback:
+                ExitKnockbackState();
+                break;
+            case State.dead:
+                ExitDeadState();
+                break;
+        }
+
+        switch (state)
+        {
+            case State.Moving:
+                EnterMovingState();
+                break;
+            case State.Knockback:
+                EnterKnockbackState();
+                break;
+            case State.dead:
+                EnterDeadState();
+                break;
+        }
+
+        currentState = state;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+    }
+
+    //FINISH ENEMY CONTROLER-----------------------------------------------------------------------------------------------------------------------------------------------------
+   
 }
