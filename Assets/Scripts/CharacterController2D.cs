@@ -66,6 +66,8 @@ public class CharacterController2D : MonoBehaviour {
 
 	// number of layer that Platforms are on (setup in Awake)
 	int _platformLayer;
+
+	private SpriteRenderer sprite;
 	
 	void Awake () {
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
@@ -100,6 +102,8 @@ public class CharacterController2D : MonoBehaviour {
 
 		currentEnergy = initialEnergy;
 		energyBar.SetMaxEnergy(maxEnergy, initialEnergy);
+
+		sprite = GetComponent<SpriteRenderer>();
 
 	}
 
@@ -202,6 +206,12 @@ public class CharacterController2D : MonoBehaviour {
 			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
+
+		if (other.gameObject.CompareTag("Enemy"))
+		{
+			Debug.Log("Toca al enemigo");
+			StartCoroutine(FlashRed());
+		}
 	}
 
 
@@ -212,5 +222,12 @@ public class CharacterController2D : MonoBehaviour {
 			Destroy(other.gameObject);
         }
 	}
+
+	public IEnumerator FlashRed()
+    {
+		sprite.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		sprite.color = Color.white;
+    }
 
 }

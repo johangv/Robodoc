@@ -514,8 +514,8 @@ Canvas:
   m_GameObject: {fileID: 657831434}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1069931082}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -664,6 +664,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1069931082 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5926961519659777583, guid: 28699820816594e4599f411b3fc729f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5926961519887599184}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1147746706
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +817,12 @@ SpriteRenderer:
 --- !u!4 &1599867441 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 489630001648573415, guid: 2063864d953c61b43becc7d18d4d8663,
+    type: 3}
+  m_PrefabInstance: {fileID: 489630001380925748}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1792328924 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 489630001648573414, guid: 2063864d953c61b43becc7d18d4d8663,
     type: 3}
   m_PrefabInstance: {fileID: 489630001380925748}
   m_PrefabAsset: {fileID: 0}
@@ -1063,6 +1075,10 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 842722372}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 1792328924}
     - target: {fileID: 489630001648573412, guid: 2063864d953c61b43becc7d18d4d8663,
         type: 3}
       propertyPath: m_Name

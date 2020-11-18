@@ -17,6 +17,7 @@ public class EnemyLogic : MonoBehaviour
     private GameObject SimpleBot;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
+    private SpriteRenderer spriteRobot;
 
     //Enemy animations
     [SerializeField]
@@ -68,10 +69,10 @@ public class EnemyLogic : MonoBehaviour
         currentHealth,
         knockbackStartTime;
 
+
     // Start is called before the first frame update
     private void Start()
     {
-        
 
         //Initialize the Health of the enemy
         currentHealth = maxHealth;
@@ -81,6 +82,7 @@ public class EnemyLogic : MonoBehaviour
         SimpleBot = transform.Find("SimpleBot").gameObject;
         _rigidbody = SimpleBot.GetComponent<Rigidbody2D>();
         _animator = SimpleBot.GetComponent<Animator>();
+        spriteRobot = SimpleBot.GetComponent<SpriteRenderer>();
         facingDirection = 1;
 
     }
@@ -160,6 +162,10 @@ public class EnemyLogic : MonoBehaviour
             _rigidbody.velocity = movement;
             _animator.SetBool("Knockback", true);
             isDamaged = !isDamaged;
+
+    //The enemy is red when the player hit them------------------------------------------------------------
+            Debug.Log("Es golpeado");
+            StartCoroutine(FlashRed());
     }
 
     private void UpdateKnockbackState()
@@ -270,5 +276,13 @@ public class EnemyLogic : MonoBehaviour
     }
 
     //FINISH ENEMY CONTROLER-----------------------------------------------------------------------------------------------------------------------------------------------------
-   
+
+
+    public IEnumerator FlashRed()
+    {
+        spriteRobot.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        spriteRobot.color = Color.white;
+    }
+
 }
