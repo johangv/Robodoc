@@ -77,7 +77,6 @@ public class PlayerCombat : MonoBehaviour
 
         attackDetails[0] = attack1Damage;
         attackDetails[1] = transform.position.x;
-        Debug.Log(transform.position.x);
 
         foreach (Collider2D collider in detectedObjects)
         {

@@ -164,7 +164,6 @@ public class EnemyLogic : MonoBehaviour
             isDamaged = !isDamaged;
 
     //The enemy is red when the player hit them------------------------------------------------------------
-            Debug.Log("Es golpeado");
             StartCoroutine(FlashRed());
     }
 
@@ -186,6 +185,7 @@ public class EnemyLogic : MonoBehaviour
     {
         //Switch dead animation
         Destroy(gameObject);
+        isDamaged = !isDamaged;
     }
 
     private void UpdateDeadState()
@@ -206,8 +206,12 @@ public class EnemyLogic : MonoBehaviour
         {
 
             currentHealth -= attackDetails[0];
-            Debug.Log(SimpleBot.transform.position.x);
-            Instantiate(hitParticle, SimpleBot.transform.position,
+            Debug.Log(SimpleBot.transform.position);
+            Vector3 particlePosition = new Vector3(SimpleBot.transform.position.x, 
+                                                   SimpleBot.transform.position.y + 2.0f,
+                                                   SimpleBot.transform.position.z);
+
+            Instantiate(hitParticle, particlePosition,
                 Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
             if (attackDetails[1] > SimpleBot.transform.position.x)

@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 489630001648573409}
   - component: {fileID: 7961695447411511784}
   - component: {fileID: 16878584}
-  - component: {fileID: 489630001380925750}
   - component: {fileID: 1910889730}
   m_Layer: 8
   m_Name: NikolaSteaward
@@ -265,25 +264,6 @@ MonoBehaviour:
   fallSFX: {fileID: 0}
   jumpSFX: {fileID: 0}
   victorySFX: {fileID: 0}
---- !u!114 &489630001380925750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489630001648573412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4952205137f79274e9ecae0b914fe333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPoint: {fileID: 66315565}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  attackRange: 1.3
-  attackDamage: 3
-  attackRate: 2
 --- !u!114 &1910889730
 MonoBehaviour:
   m_ObjectHideFlags: 0

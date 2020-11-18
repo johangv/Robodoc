@@ -207,6 +207,7 @@ public class CharacterController2D : MonoBehaviour {
 			Destroy(other.gameObject);
 		}
 
+		//The player is damaged
 		if (other.gameObject.CompareTag("Enemy"))
 		{
 			Debug.Log("Toca al enemigo");
@@ -223,6 +224,7 @@ public class CharacterController2D : MonoBehaviour {
         }
 	}
 
+	//The color player changes to red
 	public IEnumerator FlashRed()
     {
 		sprite.color = Color.red;
