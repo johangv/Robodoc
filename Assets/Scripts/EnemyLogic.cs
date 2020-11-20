@@ -167,14 +167,12 @@ public class EnemyLogic : MonoBehaviour
 
     private void EnterKnockbackState()
     {
-            knockbackStartTime = Time.time;
-            movement.Set(knockbackSpeed.x * damageDirection, knockbackSpeed.y);
-            _rigidbody.velocity = movement;
-            _animator.SetBool("Knockback", true);
-            isDamaged = !isDamaged;
-
-    //The enemy is red when the player hit them------------------------------------------------------------
-            StartCoroutine(FlashRed());
+        knockbackStartTime = Time.time;
+        movement.Set(knockbackSpeed.x * damageDirection, knockbackSpeed.y);
+        _rigidbody.velocity = movement;
+        _animator.SetBool("Knockback", true);
+        isDamaged = !isDamaged;
+          
     }
 
     private void UpdateKnockbackState()
@@ -228,6 +226,9 @@ public class EnemyLogic : MonoBehaviour
 
             Instantiate(hitParticle, particlePosition,
                 Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+
+            //The enemy is red when the player hit them------------------------------------------------------------
+            StartCoroutine(FlashRed());
 
             if (attackDetails[1] > SimpleBot.transform.position.x)
             {
