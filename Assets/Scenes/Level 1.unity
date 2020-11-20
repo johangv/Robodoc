@@ -365,11 +365,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8813692623984109747, guid: 6984d1b7135098e41bd3984b0965ff7b,
-        type: 3}
-      propertyPath: whatIsGround.m_Bits
-      value: 6144
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6984d1b7135098e41bd3984b0965ff7b, type: 3}
 --- !u!1 &153477771 stripped
@@ -1908,7 +1903,7 @@ PrefabInstance:
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3325124
+      value: 1.0530276
       objectReference: {fileID: 0}
     - target: {fileID: 5926961519659777744, guid: 28699820816594e4599f411b3fc729f2,
         type: 3}
@@ -2028,11 +2023,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pinchos_0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6148409022000440823, guid: c80cd1be1f8c94a41913ba53b47ed44d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c80cd1be1f8c94a41913ba53b47ed44d, type: 3}
@@ -2463,6 +2453,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813692625395444665, guid: 6984d1b7135098e41bd3984b0965ff7b,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -811938427
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813692625395444665, guid: 6984d1b7135098e41bd3984b0965ff7b,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6984d1b7135098e41bd3984b0965ff7b, type: 3}

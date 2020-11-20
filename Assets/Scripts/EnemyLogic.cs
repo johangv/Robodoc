@@ -77,7 +77,7 @@ public class EnemyLogic : MonoBehaviour
     private float
         currentHealth,
         knockbackStartTime;
-
+    
     //Array for the enemy attackDetails
     private float[] attackDetails = new float[2];
 
