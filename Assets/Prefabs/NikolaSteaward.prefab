@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613925327}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.379, y: -0.149, z: 0}
+  m_LocalPosition: {x: -0.379, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 489630001648573415}
@@ -163,7 +163,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.32, y: 0.76}
+  m_Offset: {x: -0.32, y: 0.79}
   serializedVersion: 2
   m_Radius: 0.755145
 --- !u!50 &489630001648573408
@@ -181,8 +181,8 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_GravityScale: 3
+  m_Material: {fileID: 6200000, guid: 2bd412587937f79489918dbed82e2d56, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -200,7 +200,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.27869266, y: 1.64}
+  m_Offset: {x: -0.27869272, y: 1.4516978}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -211,7 +211,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.958485, y: 2.514216}
+  m_Size: {x: 2.23, y: 2.8908205}
   m_EdgeRadius: 0
 --- !u!95 &7961695447411511784
 Animator:
@@ -245,9 +245,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 600
-  playerHealth: 10
-  maxHealth: 100
+  jumpForce: 750
+  playerHealth: 1
+  maxHealth: 10
   currentHealth: 0
   healthBar: {fileID: 0}
   maxEnergy: 100
@@ -256,7 +256,7 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 6144
   groundCheck: {fileID: 1613925328}
   playerCanMove: 1
   coinSFX: {fileID: 0}
@@ -264,6 +264,9 @@ MonoBehaviour:
   fallSFX: {fileID: 0}
   jumpSFX: {fileID: 0}
   victorySFX: {fileID: 0}
+  _playerLayer: 0
+  knockbackSpeed: {x: 10, y: 5}
+  knockbackDuration: 0.3
 --- !u!114 &1910889730
 MonoBehaviour:
   m_ObjectHideFlags: 0

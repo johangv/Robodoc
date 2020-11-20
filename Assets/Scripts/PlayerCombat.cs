@@ -23,6 +23,8 @@ public class PlayerCombat : MonoBehaviour
 
     private float[] attackDetails = new float[2];
 
+    private CharacterController2D pc;
+
     private void Update()
     {
         CheckCombatInput();
@@ -33,6 +35,8 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetBool("canAttack", combatEnabled);
+
+        pc = GetComponent<CharacterController2D>();
     }
 
     private void CheckCombatInput()
@@ -63,7 +67,7 @@ public class PlayerCombat : MonoBehaviour
                 anim.SetBool("isAttacking", isAttacking);
             }
         }
-        if(Time.time >= lastInputTime + inputTimer)
+        if (Time.time >= lastInputTime + inputTimer)
         {
             //Wait for new input
             gotInput = false;
@@ -72,7 +76,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void CheckAttackHitBox()
     {
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position, 
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position,
             attack1Radius, whatIsDamageable);
 
         attackDetails[0] = attack1Damage;
@@ -91,6 +95,27 @@ public class PlayerCombat : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
         anim.SetBool("attack1", false);
     }
+
+    //Player Function for the player----------------------------------------------------------------------------------------------------
+    private void Damage(float[] attackDetails)
+    {
+            int direction;
+            //Damage player here using attackDetails[0]
+
+            if (attackDetails[1] < transform.position.x)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = -1;
+            }
+
+        pc.Knockback(direction);
+        pc.UpdateDamage(attackDetails[0]);
+        
+    }
+
 
     private void OnDrawGizmos()
     {

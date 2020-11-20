@@ -20,11 +20,11 @@ TagManager:
   - 
   - Player
   - Enemy
+  - Death
   - Platform
   - Ground
   - Background
   - CameraBounds
-  - 
   - 
   - 
   - 

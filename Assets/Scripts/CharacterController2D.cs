@@ -11,9 +11,10 @@ public class CharacterController2D : MonoBehaviour {
 	public float jumpForce = 600f;
 
 	// player health
-	public int playerHealth = 1;
-	public int maxHealth = 100;
-	public int currentHealth;
+	public float playerHealth = 1;
+	public float maxHealth = 10;
+	public float currentHealth;
+	private float knockbackStartTime;
 
 	public HealthBar healthBar;
 
@@ -51,6 +52,7 @@ public class CharacterController2D : MonoBehaviour {
 	Animator _animator;
 	AudioSource _audio;
 
+
 	// hold player motion in this timestep
 	float _vx;
 	float _vy;
@@ -59,16 +61,25 @@ public class CharacterController2D : MonoBehaviour {
 	bool facingRight = true;
 	bool isGrounded = false;
 	bool isRunning = false;
-    bool isHitting = false;
+	private bool knockback;
+	private bool isDead;
 
 	// store the layer the player is on (setup in Awake)
-	int _playerLayer;
+	public int _playerLayer;
 
 	// number of layer that Platforms are on (setup in Awake)
 	int _platformLayer;
 
 	private SpriteRenderer sprite;
-	
+
+	[SerializeField]
+	private Vector2 knockbackSpeed;
+
+	[SerializeField]
+	private float knockbackDuration;
+	private int damageDirection;
+	private Vector2 movement;
+
 	void Awake () {
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
@@ -87,9 +98,6 @@ public class CharacterController2D : MonoBehaviour {
 			// let's just add the AudioSource component dynamically
 			_audio = gameObject.AddComponent<AudioSource>();
 		}
-
-		// determine the player's specified layer
-		_playerLayer = this.gameObject.layer;
 
 		// determine the platform's specified layer
 		_platformLayer = LayerMask.NameToLayer("Platform");
@@ -135,7 +143,8 @@ public class CharacterController2D : MonoBehaviour {
 		// Check to see if character is grounded by raycasting from the middle of the player
 		// down to the groundCheck position and see if collected with gameobjects on the
 		// whatIsGround layer
-		isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);  
+		//isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround); 
+		isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);
 
 		// Set the grounded animation states
 		_animator.SetBool("Grounded", isGrounded);
@@ -155,14 +164,18 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 		}
 
-		// Change the actual velocity on the rigidbody
-		_rigidbody.velocity = new Vector2(_vx * moveSpeed, _vy);
-
+		if (playerCanMove && !knockback){
+			// Change the actual velocity on the rigidbody
+			_rigidbody.velocity = new Vector2(_vx * moveSpeed, _vy);
+		}
 		// if moving up then don't collide with platform layer
 		// this allows the player to jump up through things on the platform layer
 		// NOTE: requires the platforms to be on a layer named "Platform"
 		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f));
 
+
+		//Check if the player is Knockback
+		CheckKnockback();
     }
 
 	void chargeEnergy(int energy)
@@ -179,10 +192,10 @@ public class CharacterController2D : MonoBehaviour {
 	{
 		// get the current scale
 		Vector3 localScale = _transform.localScale;
-		if (_vx > 0) // moving right so face right
+		if (_vx > 0 && !knockback) // moving right so face right
         {
 			facingRight = true;
-		} else if (_vx < 0) { // moving left so face left
+		} else if (_vx < 0 && !knockback) { // moving left so face left
 			facingRight = false;
 		}
 
@@ -199,14 +212,14 @@ public class CharacterController2D : MonoBehaviour {
 	// Si el jugador recolecta baterías o tuercas
 	private void OnTriggerEnter2D(Collider2D other)
     {
-		if (other.gameObject.CompareTag("Batery"))
+		if (other.gameObject.CompareTag("Batery") && !isDead)
 		{
 			Debug.Log("Toca a la batería");
 			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
 		//Collect Nut
-		if (other.gameObject.CompareTag("Nut"))
+		if (other.gameObject.CompareTag("Nut") && !isDead)
 		{
 			Debug.Log("Toca a la tuerca");
 			Destroy(other.gameObject);
@@ -214,28 +227,45 @@ public class CharacterController2D : MonoBehaviour {
 
 	}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+	//The player enter in knockback-------------------------------------------------------------------------------------------------------
+	public void Knockback(int direction)
     {
-		//The player touch an enemy
-		if (collision.gameObject.CompareTag("Enemy"))
-		{
-			Debug.Log("Toca al enemigo");
+		knockback = true;
+		knockbackStartTime = Time.time;
+		_rigidbody.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
+    }
+
+	private void CheckKnockback()
+    {
+		if(Time.time >= knockbackStartTime + knockbackDuration && knockback)
+        {
+			knockback = false;
+			_rigidbody.velocity = new Vector2(0.0f, _rigidbody.velocity.y);
+        }
+    }
+
+
+	//Knockback finalized----------------------------------------------------------------------------------------------------------------
+    
+    public void UpdateDamage(float touchDamage)
+    {
+        if (!isDead)
+        {
+			//The player touch an enemy
 			StartCoroutine(FlashRed());
 			//So the player lost live
-			ApplyDamage(20);
+			ApplyDamage(touchDamage);
 		}
-	}
-
-    public void CollectBatery(Collider2D other) {
-
-		if (other.gameObject.CompareTag("Batery"))
-        {
-			Destroy(other.gameObject);
-        }
-	}
+		
+        if(currentHealth <= 0){
+			//Player is now dead, so start Dying
+			isDead = true;
+			StartCoroutine(KillPlayer());		
+		}
+	} 
 
 	//The color player changes to red
-	public IEnumerator FlashRed()
+	private IEnumerator FlashRed()
     {
 		sprite.color = Color.red;
 		yield return new WaitForSeconds(0.1f);
@@ -243,7 +273,7 @@ public class CharacterController2D : MonoBehaviour {
     }
 
 	//When the player receive damage from any enemy
-	private void ApplyDamage(int damage)
+	private void ApplyDamage(float damage)
     {
         if (playerCanMove)
         {
@@ -251,37 +281,36 @@ public class CharacterController2D : MonoBehaviour {
 			currentHealth -= damage;
 			healthBar.SetHealth(currentHealth);
         }
-		if (currentHealth <= 0)
-        {
-			//Player is now dead, so start Dying
-			StartCoroutine(KillPlayer());
-        }
+
     }
 
 	//When the player is Dying
-	IEnumerator KillPlayer()
+	private IEnumerator KillPlayer()
 	{
 		if (playerCanMove)
 		{
 			// freeze the player
 			FreezeMotion();
 
+			//Change the player Layer to death
+			_playerLayer = 10;
+			this.gameObject.layer = _playerLayer;
+
 			// play the death animation
+			_animator.SetBool("isDeadd", isDead);
 			_animator.SetTrigger("isDead");
 
 			// After waiting we reset the game
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.5f);
 
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
 
 	//The player can't move
-	void FreezeMotion()
+	private void FreezeMotion()
 	{
 		playerCanMove = false;
-		_rigidbody.velocity = new Vector2(0, 0);
-		_rigidbody.isKinematic = true;
 	}
 
 }

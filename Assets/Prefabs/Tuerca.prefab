@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8549307881535464593}
   - component: {fileID: 4343512636558918798}
   - component: {fileID: 9130365466055097631}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Tuerca
   m_TagString: Nut
   m_Icon: {fileID: 0}
