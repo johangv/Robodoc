@@ -219,7 +219,6 @@ public class EnemyLogic : MonoBehaviour
         {
 
             currentHealth -= attackDetails[0];
-            Debug.Log(SimpleBot.transform.position);
             Vector3 particlePosition = new Vector3(SimpleBot.transform.position.x, 
                                                    SimpleBot.transform.position.y + 2.0f,
                                                    SimpleBot.transform.position.z);

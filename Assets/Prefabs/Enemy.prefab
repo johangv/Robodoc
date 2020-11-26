@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8813692623984109746}
   - component: {fileID: 8813692623984109747}
+  - component: {fileID: 1618702719}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8813692623984109745}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82f1664209994a04da1894dfa4dc767c, type: 3}
   m_Name: 
@@ -99,6 +100,23 @@ MonoBehaviour:
   knockbackSpeed: {x: 10, y: 5}
   touchDamageBotLeft: {x: 0, y: 0}
   touchDamageTopRight: {x: 0, y: 0}
+--- !u!114 &1618702719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813692623984109745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca982db15d569a47b76db9ee76942d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityData: {fileID: 11400000, guid: cbbf943dd8a9eaf478a10818b6012ff2, type: 2}
+  wallCheck: {fileID: 4065979110814558687}
+  ledgeCheck: {fileID: 1363450807308943358}
+  idleStateData: {fileID: 11400000, guid: a86f94ef63675c2429a2648ea3352d85, type: 2}
+  moveStateData: {fileID: 11400000, guid: eef22335515d85a4784be6f17ef0baa8, type: 2}
 --- !u!1001 &4065979109387291899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,6 +124,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8813692623984109746}
     m_Modifications:
+    - target: {fileID: 1632935710, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 0e2561e96ccb9a64a9c9a31ebb8e0655, type: 2}
     - target: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,
         type: 3}
       propertyPath: m_LocalRotation.x
