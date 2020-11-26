@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &786372438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786372439}
+  m_Layer: 9
+  m_Name: PlayerCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786372439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786372438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.051, y: 1.027, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8813692625395444666}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257429444
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 8813692623984109745}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.91, y: -6.27, z: 0}
-  m_LocalScale: {x: 1.7179635, y: 1.7179635, z: 0}
+  m_LocalScale: {x: 1.5202161, y: 1.5202161, z: 0}
   m_Children:
   - {fileID: 8813692625395444666}
   m_Father: {fileID: 0}
@@ -115,8 +145,10 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: cbbf943dd8a9eaf478a10818b6012ff2, type: 2}
   wallCheck: {fileID: 4065979110814558687}
   ledgeCheck: {fileID: 1363450807308943358}
+  playerCheck: {fileID: 786372439}
   idleStateData: {fileID: 11400000, guid: a86f94ef63675c2429a2648ea3352d85, type: 2}
   moveStateData: {fileID: 11400000, guid: eef22335515d85a4784be6f17ef0baa8, type: 2}
+  playerDetectedData: {fileID: 11400000, guid: 48ee37f93a8fcc746b8d9b9e0c33cd84, type: 2}
 --- !u!1001 &4065979109387291899
 PrefabInstance:
   m_ObjectHideFlags: 0
