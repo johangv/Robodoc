@@ -149,6 +149,9 @@ MonoBehaviour:
   idleStateData: {fileID: 11400000, guid: a86f94ef63675c2429a2648ea3352d85, type: 2}
   moveStateData: {fileID: 11400000, guid: eef22335515d85a4784be6f17ef0baa8, type: 2}
   playerDetectedData: {fileID: 11400000, guid: 48ee37f93a8fcc746b8d9b9e0c33cd84, type: 2}
+  chargeStateData: {fileID: 11400000, guid: 9b3dc0868e237dd4ba20dbf5cad7ca4a, type: 2}
+  LookForPlayerStateData: {fileID: 11400000, guid: 2daffdcadd76e964698169dd0091499f,
+    type: 2}
 --- !u!1001 &4065979109387291899
 PrefabInstance:
   m_ObjectHideFlags: 0
