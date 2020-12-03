@@ -259,7 +259,6 @@ public class CharacterController2D : MonoBehaviour {
 			playerHealth += apple;
 			currentHealth += apple;
 			healthBar.SetHealth(currentHealth);
-
 		}
 	}
 
