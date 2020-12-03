@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77980653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 1.74, z: 0}
+  m_LocalPosition: {x: -0.03, y: 1.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6148409022000440820}
@@ -176,8 +176,8 @@ MonoBehaviour:
   enemyGameObject: {fileID: 0}
   lastTouchDamageTime: 0
   touchDamageCooldown: 2
-  touchDamageWidth: 1.65
-  touchDamageHeight: 0.42
+  touchDamageWidth: 1.7
+  touchDamageHeight: 0.44
   touchDamage: 2
   touchDamageCheck: {fileID: 77980654}
   touchDamageBotLeft: {x: 0, y: 0}
