@@ -17,3 +17,4 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  attack: {fileID: 8300000, guid: c34b696a63de8f248be868f948f869fd, type: 3}

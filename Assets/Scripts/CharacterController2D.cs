@@ -43,6 +43,8 @@ public class CharacterController2D : MonoBehaviour {
 	public AudioClip hurtSFX;
 	public AudioClip jumpSFX;
 	public AudioClip victorySFX;
+	public AudioClip eatApple;
+	public AudioClip falls;
 
 	// private variables below
 
@@ -61,6 +63,7 @@ public class CharacterController2D : MonoBehaviour {
 	bool facingRight = true;
 	bool isGrounded = false;
 	bool isRunning = false;
+	bool isFalls;
 	private bool knockback;
 	private bool isDead;
 
@@ -235,6 +238,7 @@ public class CharacterController2D : MonoBehaviour {
 			Debug.Log("Toca a la manzana");
 			CollectApple(2);
 			Destroy(other.gameObject);
+			_audio.PlayOneShot(eatApple, 0.5f);
 		}
 
 	}
@@ -243,6 +247,7 @@ public class CharacterController2D : MonoBehaviour {
 	{
 		if (collision.gameObject.name == "SueloFalso")
 		{
+			isFalls = !isFalls;
 			StartCoroutine(KillPlayer());
 		}
 	}
@@ -336,10 +341,16 @@ public class CharacterController2D : MonoBehaviour {
 			// play the death animation
 			_animator.SetBool("isDeadd", isDead);
 			_animator.SetTrigger("isDead");
-
-			//Play the death sound
-			_audio.PlayOneShot(deathSFX, 0.2f);
-
+            if (!isFalls)
+            {
+				//Play the death sound
+				_audio.PlayOneShot(deathSFX, 0.2f);
+			}
+            else
+            {
+				_audio.PlayOneShot(falls, 0.2f);
+			}
+			
 			// After waiting we reset the game
 			yield return new WaitForSeconds(1.5f);
 

@@ -14,6 +14,9 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }
     public GameObject simpleBotGO { get; private set; }
 
+    public AudioSource _audio { get; private set; }
+       
+
     public SpriteRenderer sprite { get; private set; }
 
     public AnimationToStateMachiine atsm { get; private set; }
@@ -43,6 +46,7 @@ public class Entity : MonoBehaviour
         anim = simpleBotGO.GetComponent<Animator>();
         atsm = simpleBotGO.GetComponent<AnimationToStateMachiine>();
         sprite = simpleBotGO.GetComponent<SpriteRenderer>();
+        _audio = simpleBotGO.GetComponent<AudioSource>();
 
         stateMachine = new FiniteStateMachine();
     }

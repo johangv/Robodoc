@@ -52,7 +52,8 @@ public class MeleeAttackState : AttackState
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
 
         foreach(Collider2D collider in detectedObjects)
-        {
+        {           
+            entity._audio.PlayOneShot(stateData.attack, 0.2f);
             collider.transform.SendMessage("Damage", attackDetails);
         }
     }
