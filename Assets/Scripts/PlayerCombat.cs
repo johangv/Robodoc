@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     //Code to the enemy
-
+    public AudioClip hitSFX;
+    AudioSource _audio;
     [SerializeField]
     private bool combatEnabled;
     [SerializeField]
@@ -22,6 +23,17 @@ public class PlayerCombat : MonoBehaviour
     private Animator anim;
 
     private float[] attackDetails = new float[2];
+    
+    void Awake ()
+    {
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+        { // if AudioSource is missing
+            Debug.LogWarning("AudioSource component missing from this gameobject. Adding one.");
+            // let's just add the AudioSource component dynamically
+            _audio = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     private void Update()
     {
@@ -61,9 +73,12 @@ public class PlayerCombat : MonoBehaviour
                 anim.SetBool("attack1", true);
                 anim.SetBool("firstAttack", isFirstAttack);
                 anim.SetBool("isAttacking", isAttacking);
+                // play hit sound
+                _audio.PlayOneShot(hitSFX,0.5f);
+                Debug.Log("Olá");
             }
         }
-        if(Time.time >= lastInputTime + inputTimer)
+        if (Time.time >= lastInputTime + inputTimer)
         {
             //Wait for new input
             gotInput = false;
@@ -72,7 +87,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void CheckAttackHitBox()
     {
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position, 
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position,
             attack1Radius, whatIsDamageable);
 
         attackDetails[0] = attack1Damage;
