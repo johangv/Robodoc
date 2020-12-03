@@ -11,10 +11,9 @@ public class CharacterController2D : MonoBehaviour {
 	public float jumpForce = 600f;
 
 	// player health
-	public float playerHealth = 1;
-	public float maxHealth = 10;
-	public float currentHealth;
-	private float knockbackStartTime;
+	public int playerHealth = 1;
+	public int maxHealth = 100;
+	public int currentHealth;
 
 	public HealthBar healthBar;
 
@@ -42,7 +41,11 @@ public class CharacterController2D : MonoBehaviour {
 	public AudioClip deathSFX;
 	public AudioClip fallSFX;
 	public AudioClip jumpSFX;
+	public AudioClip hurtSFX;
 	public AudioClip victorySFX;
+	public AudioClip walkSFX;
+
+
 
 	// private variables below
 
@@ -52,7 +55,6 @@ public class CharacterController2D : MonoBehaviour {
 	Animator _animator;
 	AudioSource _audio;
 
-
 	// hold player motion in this timestep
 	float _vx;
 	float _vy;
@@ -61,25 +63,16 @@ public class CharacterController2D : MonoBehaviour {
 	bool facingRight = true;
 	bool isGrounded = false;
 	bool isRunning = false;
-	private bool knockback;
-	private bool isDead;
+    bool isHitting = false;
 
 	// store the layer the player is on (setup in Awake)
-	public int _playerLayer;
+	int _playerLayer;
 
 	// number of layer that Platforms are on (setup in Awake)
 	int _platformLayer;
 
 	private SpriteRenderer sprite;
-
-	[SerializeField]
-	private Vector2 knockbackSpeed;
-
-	[SerializeField]
-	private float knockbackDuration;
-	private int damageDirection;
-	private Vector2 movement;
-
+	
 	void Awake () {
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
@@ -99,12 +92,16 @@ public class CharacterController2D : MonoBehaviour {
 			_audio = gameObject.AddComponent<AudioSource>();
 		}
 
+		// determine the player's specified layer
+		_playerLayer = this.gameObject.layer;
+
 		// determine the platform's specified layer
 		_platformLayer = LayerMask.NameToLayer("Platform");
 	}
 
     void Start()
     {
+
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
 
@@ -115,9 +112,11 @@ public class CharacterController2D : MonoBehaviour {
 
 	}
 
+
     // this is where most of the player controller magic happens each game event loop
     void Update()
 	{
+
 
 		// exit update if player cannot move or game is paused
 		if (!playerCanMove || (Time.timeScale == 0f))
@@ -130,6 +129,7 @@ public class CharacterController2D : MonoBehaviour {
 		if (_vx != 0) 
 		{
 			isRunning = true;
+		
 		} else {
 			isRunning = false;
 		}
@@ -137,14 +137,21 @@ public class CharacterController2D : MonoBehaviour {
 		// set the running animation state
 		_animator.SetBool("Running", isRunning);
 
+		// play walking sound
+	/*	_audio.Stop();
+		_audio.loop = true;
+		_audio.clip = walkSFX;
+		_audio.Play();*/
+		//_audio.PlayOneShot(walkSFX);
+
+
 		// get the current vertical velocity from the rigidbody component
 		_vy = _rigidbody.velocity.y;
 
 		// Check to see if character is grounded by raycasting from the middle of the player
 		// down to the groundCheck position and see if collected with gameobjects on the
 		// whatIsGround layer
-		//isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround); 
-		isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);
+		isGrounded = Physics2D.Linecast(_transform.position, groundCheck.position, whatIsGround);  
 
 		// Set the grounded animation states
 		_animator.SetBool("Grounded", isGrounded);
@@ -155,6 +162,10 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
+
+			// play jump sound
+			_audio.PlayOneShot(jumpSFX);
+		
 		}
 	
 		// If the player stops jumping mid jump and player is not yet falling
@@ -164,18 +175,14 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 		}
 
-		if (playerCanMove && !knockback){
-			// Change the actual velocity on the rigidbody
-			_rigidbody.velocity = new Vector2(_vx * moveSpeed, _vy);
-		}
+		// Change the actual velocity on the rigidbody
+		_rigidbody.velocity = new Vector2(_vx * moveSpeed, _vy);
+
 		// if moving up then don't collide with platform layer
 		// this allows the player to jump up through things on the platform layer
 		// NOTE: requires the platforms to be on a layer named "Platform"
 		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f));
 
-
-		//Check if the player is Knockback
-		CheckKnockback();
     }
 
 	void chargeEnergy(int energy)
@@ -192,10 +199,10 @@ public class CharacterController2D : MonoBehaviour {
 	{
 		// get the current scale
 		Vector3 localScale = _transform.localScale;
-		if (_vx > 0 && !knockback) // moving right so face right
+		if (_vx > 0) // moving right so face right
         {
 			facingRight = true;
-		} else if (_vx < 0 && !knockback) { // moving left so face left
+		} else if (_vx < 0) { // moving left so face left
 			facingRight = false;
 		}
 
@@ -212,60 +219,52 @@ public class CharacterController2D : MonoBehaviour {
 	// Si el jugador recolecta baterías o tuercas
 	private void OnTriggerEnter2D(Collider2D other)
     {
-		if (other.gameObject.CompareTag("Batery") && !isDead)
+		if (other.gameObject.CompareTag("Batery"))
 		{
 			Debug.Log("Toca a la batería");
+			// play collected sound
+			_audio.PlayOneShot(coinSFX,0.5f);
 			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
 		//Collect Nut
-		if (other.gameObject.CompareTag("Nut") && !isDead)
+		if (other.gameObject.CompareTag("Nut"))
 		{
 			Debug.Log("Toca a la tuerca");
+			// play collected sound
+			_audio.PlayOneShot(coinSFX,0.5f);
 			Destroy(other.gameObject);
 		}
 
+
 	}
 
-	//The player enter in knockback-------------------------------------------------------------------------------------------------------
-	public void Knockback(int direction)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-		knockback = true;
-		knockbackStartTime = Time.time;
-		_rigidbody.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
-    }
-
-	private void CheckKnockback()
-    {
-		if(Time.time >= knockbackStartTime + knockbackDuration && knockback)
-        {
-			knockback = false;
-			_rigidbody.velocity = new Vector2(0.0f, _rigidbody.velocity.y);
-        }
-    }
-
-
-	//Knockback finalized----------------------------------------------------------------------------------------------------------------
-    
-    public void UpdateDamage(float touchDamage)
-    {
-        if (!isDead)
-        {
-			//The player touch an enemy
+		//The player touch an enemy
+		if (collision.gameObject.CompareTag("Enemy"))
+		{
+			Debug.Log("Toca al enemigo");
 			StartCoroutine(FlashRed());
+
 			//So the player lost live
-			ApplyDamage(touchDamage);
+			ApplyDamage(20);
+			// play jump sound
+			_audio.PlayOneShot(hurtSFX,0.3f);
+
 		}
-		
-        if(currentHealth <= 0){
-			//Player is now dead, so start Dying
-			isDead = true;
-			StartCoroutine(KillPlayer());		
-		}
-	} 
+	}
+
+    public void CollectBatery(Collider2D other) {
+
+		if (other.gameObject.CompareTag("Batery"))
+        {
+			Destroy(other.gameObject);
+        }
+	}
 
 	//The color player changes to red
-	private IEnumerator FlashRed()
+	public IEnumerator FlashRed()
     {
 		sprite.color = Color.red;
 		yield return new WaitForSeconds(0.1f);
@@ -273,7 +272,7 @@ public class CharacterController2D : MonoBehaviour {
     }
 
 	//When the player receive damage from any enemy
-	private void ApplyDamage(float damage)
+	private void ApplyDamage(int damage)
     {
         if (playerCanMove)
         {
@@ -281,36 +280,43 @@ public class CharacterController2D : MonoBehaviour {
 			currentHealth -= damage;
 			healthBar.SetHealth(currentHealth);
         }
-
+		if (currentHealth <= 0)
+        {
+			//Player is now dead, so start Dying
+			StartCoroutine(KillPlayer());
+			
+		}
     }
 
 	//When the player is Dying
-	private IEnumerator KillPlayer()
+	IEnumerator KillPlayer()
 	{
 		if (playerCanMove)
 		{
 			// freeze the player
 			FreezeMotion();
 
-			//Change the player Layer to death
-			_playerLayer = 10;
-			this.gameObject.layer = _playerLayer;
-
 			// play the death animation
-			_animator.SetBool("isDeadd", isDead);
 			_animator.SetTrigger("isDead");
+			
+			// play the death sound
+			_audio.PlayOneShot(deathSFX,0.2f);
 
 			// After waiting we reset the game
-			yield return new WaitForSeconds(1.5f);
+			yield return new WaitForSeconds(1.2f);
+			
+
 
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
 
 	//The player can't move
-	private void FreezeMotion()
+	void FreezeMotion()
 	{
 		playerCanMove = false;
+		_rigidbody.velocity = new Vector2(0, 0);
+		_rigidbody.isKinematic = true;
 	}
 
 }

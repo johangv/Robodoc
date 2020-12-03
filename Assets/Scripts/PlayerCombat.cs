@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     //Code to the enemy
-
+    public AudioClip hitSFX;
+    AudioSource _audio;
     [SerializeField]
     private bool combatEnabled;
     [SerializeField]
@@ -21,9 +22,18 @@ public class PlayerCombat : MonoBehaviour
 
     private Animator anim;
 
-    private AttackDetails attackDetails;
-
-    private CharacterController2D pc;
+    private float[] attackDetails = new float[2];
+    
+    void Awake ()
+    {
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+        { // if AudioSource is missing
+            Debug.LogWarning("AudioSource component missing from this gameobject. Adding one.");
+            // let's just add the AudioSource component dynamically
+            _audio = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     private void Update()
     {
@@ -35,8 +45,6 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetBool("canAttack", combatEnabled);
-
-        pc = GetComponent<CharacterController2D>();
     }
 
     private void CheckCombatInput()
@@ -65,6 +73,9 @@ public class PlayerCombat : MonoBehaviour
                 anim.SetBool("attack1", true);
                 anim.SetBool("firstAttack", isFirstAttack);
                 anim.SetBool("isAttacking", isAttacking);
+                // play hit sound
+                _audio.PlayOneShot(hitSFX,0.5f);
+                Debug.Log("Olá");
             }
         }
         if (Time.time >= lastInputTime + inputTimer)
@@ -79,12 +90,13 @@ public class PlayerCombat : MonoBehaviour
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position,
             attack1Radius, whatIsDamageable);
 
-        attackDetails.damageAmount = attack1Damage;
-        attackDetails.position = transform.position;
+        attackDetails[0] = attack1Damage;
+        attackDetails[1] = transform.position.x;
 
         foreach (Collider2D collider in detectedObjects)
         {
             collider.transform.parent.SendMessage("Damage", attackDetails);
+            //Instantiate hit particle
         }
 
     }
@@ -94,27 +106,6 @@ public class PlayerCombat : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
         anim.SetBool("attack1", false);
     }
-
-    //Player Function for the player----------------------------------------------------------------------------------------------------
-    private void Damage(AttackDetails attackDetails)
-    {
-            int direction;
-            //Damage player here using attackDetails[0]
-
-            if (attackDetails.position.x < transform.position.x)
-            {
-                direction = 1;
-            }
-            else
-            {
-                direction = -1;
-            }
-
-        pc.Knockback(direction);
-        pc.UpdateDamage(attackDetails.damageAmount);
-        
-    }
-
 
     private void OnDrawGizmos()
     {
