@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e656bc42efe8984eb01f311b7ae5ce2, type: 3}
-  m_Name: E1_PlayerDetectedState
+  m_Script: {fileID: 11500000, guid: e5554961d55bea54d80c28f3dd994e0c, type: 3}
+  m_Name: E2_MeleeAttackData
   m_EditorClassIdentifier: 
-  longRangeActionTime: 1
+  attackRadius: 1.5
+  attackDamage: 3
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
