@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &77980653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77980654}
+  m_Layer: 9
+  m_Name: TouchDamageCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &77980654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77980653}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03, y: 1.74, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6148409022000440820}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6148409022000440823
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +42,7 @@ GameObject:
   - component: {fileID: 6148409022000440821}
   - component: {fileID: 6148409022000440822}
   - component: {fileID: 6148409022000440827}
+  - component: {fileID: 1820581167}
   m_Layer: 9
   m_Name: Pinchos_0
   m_TagString: Enemy
@@ -29,7 +60,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.04, y: -2.8, z: 0}
   m_LocalScale: {x: 0.35118762, y: 0.35118762, z: 0.35118762}
-  m_Children: []
+  m_Children:
+  - {fileID: 77980654}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,3 +161,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.7054367, y: 1.1053118}
   m_EdgeRadius: 0
+--- !u!114 &1820581167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148409022000440823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b222568a5269621458a3df4920d39150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyGameObject: {fileID: 0}
+  lastTouchDamageTime: 0
+  touchDamageCooldown: 2
+  touchDamageWidth: 1.65
+  touchDamageHeight: 0.42
+  touchDamage: 2
+  touchDamageCheck: {fileID: 77980654}
+  touchDamageBotLeft: {x: 0, y: 0}
+  touchDamageTopRight: {x: 0, y: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256

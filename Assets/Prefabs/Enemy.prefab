@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &449450987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 449450988}
+  m_Layer: 9
+  m_Name: MeleeAttackPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &449450988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449450987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.286, y: 0.822, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8813692625395444666}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &786372438
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,7 +99,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8813692623984109746}
-  - component: {fileID: 8813692623984109747}
   - component: {fileID: 1618702719}
   m_Layer: 9
   m_Name: Enemy
@@ -93,43 +122,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8813692623984109747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8813692623984109745}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f1664209994a04da1894dfa4dc767c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitParticle: {fileID: 3162698508633763057, guid: 9923ac79c9984004d8ded97c4db5da3d,
-    type: 3}
-  groundCheckDistance: 0.5
-  wallCheckDistance: 0.1
-  movementSpeed: 3
-  maxHealth: 6
-  knockbackDuration: 0.1
-  attackDamage: 0
-  lastTouchDamageTime: 0
-  touchDamageCooldown: 0.2
-  touchDamage: 2
-  touchDamageWidth: 0.9
-  touchDamageHeight: 2.7
-  groundCheck: {fileID: 1363450807308943358}
-  wallCheck: {fileID: 4065979110814558687}
-  touchDamageCheck: {fileID: 1257429445}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 6144
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  knockbackSpeed: {x: 10, y: 5}
-  touchDamageBotLeft: {x: 0, y: 0}
-  touchDamageTopRight: {x: 0, y: 0}
 --- !u!114 &1618702719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +144,46 @@ MonoBehaviour:
   chargeStateData: {fileID: 11400000, guid: 9b3dc0868e237dd4ba20dbf5cad7ca4a, type: 2}
   LookForPlayerStateData: {fileID: 11400000, guid: 2daffdcadd76e964698169dd0091499f,
     type: 2}
+  meleeAttackStateData: {fileID: 11400000, guid: 2ab039f0b8dc724458b410879ce1d3af,
+    type: 2}
+  meleeAttackPosition: {fileID: 449450988}
+  deadStateData: {fileID: 11400000, guid: 24273dd4d25167843b121397e29e0174, type: 2}
+--- !u!114 &88324690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813692625395444671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b222568a5269621458a3df4920d39150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyGameObject: {fileID: 8813692625395444671}
+  lastTouchDamageTime: 0
+  touchDamageCooldown: 0.2
+  touchDamageWidth: 0.9
+  touchDamageHeight: 2.7
+  touchDamage: 2
+  touchDamageCheck: {fileID: 1257429445}
+  touchDamageBotLeft: {x: 0, y: 0}
+  touchDamageTopRight: {x: 0, y: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &743648536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813692625395444671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c4f7a51d1180e46bffe0db867e56fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4065979109387291899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,6 +195,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 0e2561e96ccb9a64a9c9a31ebb8e0655, type: 2}
+    - target: {fileID: 1632935710, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+      propertyPath: m_Mass
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -235,6 +271,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6b74eb41def3049be9affd687b38b5, type: 3}
+--- !u!1 &8813692625395444671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4773187560251631428, guid: 6b6b74eb41def3049be9affd687b38b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4065979109387291899}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8813692625395444666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4773187560251631425, guid: 6b6b74eb41def3049be9affd687b38b5,

@@ -25,13 +25,23 @@ public class E1_PlayerDetectedState : PlayerDetectedState
     {
         base.LogicUpdate();
 
-        if (performLongRangeAction)
+        //TODO: Transition to attack state
+        if (performCloseRangeAction)
+        {
+            stateMachine.ChangeState(enemy.meleeAttackState);
+        }
+        else if (performLongRangeAction)
         {           
             stateMachine.ChangeState(enemy.chargeState);
         }
         else if (!isPlayerInMaxAgroRange)
         {
             stateMachine.ChangeState(enemy.lookForPlayerState);
+        }
+        else if (!isDetectingLedge)
+        {
+            entity.Flip();
+            stateMachine.ChangeState(enemy.moveState);
         }
     }
 

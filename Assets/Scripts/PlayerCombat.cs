@@ -21,7 +21,7 @@ public class PlayerCombat : MonoBehaviour
 
     private Animator anim;
 
-    private float[] attackDetails = new float[2];
+    private AttackDetails attackDetails;
 
     private CharacterController2D pc;
 
@@ -79,13 +79,12 @@ public class PlayerCombat : MonoBehaviour
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attack1HitBoxPos.position,
             attack1Radius, whatIsDamageable);
 
-        attackDetails[0] = attack1Damage;
-        attackDetails[1] = transform.position.x;
+        attackDetails.damageAmount = attack1Damage;
+        attackDetails.position = transform.position;
 
         foreach (Collider2D collider in detectedObjects)
         {
             collider.transform.parent.SendMessage("Damage", attackDetails);
-            //Instantiate hit particle
         }
 
     }
@@ -97,12 +96,12 @@ public class PlayerCombat : MonoBehaviour
     }
 
     //Player Function for the player----------------------------------------------------------------------------------------------------
-    private void Damage(float[] attackDetails)
+    private void Damage(AttackDetails attackDetails)
     {
             int direction;
             //Damage player here using attackDetails[0]
 
-            if (attackDetails[1] < transform.position.x)
+            if (attackDetails.position.x < transform.position.x)
             {
                 direction = 1;
             }
@@ -112,7 +111,7 @@ public class PlayerCombat : MonoBehaviour
             }
 
         pc.Knockback(direction);
-        pc.UpdateDamage(attackDetails[0]);
+        pc.UpdateDamage(attackDetails.damageAmount);
         
     }
 
