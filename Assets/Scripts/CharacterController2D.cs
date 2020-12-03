@@ -41,7 +41,10 @@ public class CharacterController2D : MonoBehaviour {
 	public AudioClip deathSFX;
 	public AudioClip fallSFX;
 	public AudioClip jumpSFX;
+	public AudioClip hurtSFX;
 	public AudioClip victorySFX;
+
+
 
 	// private variables below
 
@@ -97,6 +100,7 @@ public class CharacterController2D : MonoBehaviour {
 
     void Start()
     {
+
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
 
@@ -110,6 +114,7 @@ public class CharacterController2D : MonoBehaviour {
     // this is where most of the player controller magic happens each game event loop
     void Update()
 	{
+
 
 		// exit update if player cannot move or game is paused
 		if (!playerCanMove || (Time.timeScale == 0f))
@@ -146,6 +151,10 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
+
+			// play jump sound
+			_audio.PlayOneShot(jumpSFX);
+		
 		}
 	
 		// If the player stops jumping mid jump and player is not yet falling
@@ -202,6 +211,8 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.CompareTag("Batery"))
 		{
 			Debug.Log("Toca a la batería");
+			// play collected sound
+			_audio.PlayOneShot(coinSFX,0.5f);
 			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
@@ -209,8 +220,11 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.CompareTag("Nut"))
 		{
 			Debug.Log("Toca a la tuerca");
+			// play collected sound
+			_audio.PlayOneShot(coinSFX,0.5f);
 			Destroy(other.gameObject);
 		}
+
 
 	}
 
@@ -221,8 +235,12 @@ public class CharacterController2D : MonoBehaviour {
 		{
 			Debug.Log("Toca al enemigo");
 			StartCoroutine(FlashRed());
+
 			//So the player lost live
 			ApplyDamage(20);
+			// play jump sound
+			_audio.PlayOneShot(hurtSFX,0.3f);
+
 		}
 	}
 
@@ -255,7 +273,8 @@ public class CharacterController2D : MonoBehaviour {
         {
 			//Player is now dead, so start Dying
 			StartCoroutine(KillPlayer());
-        }
+			
+		}
     }
 
 	//When the player is Dying
@@ -268,9 +287,14 @@ public class CharacterController2D : MonoBehaviour {
 
 			// play the death animation
 			_animator.SetTrigger("isDead");
+			
+			// play the death sound
+			_audio.PlayOneShot(deathSFX,0.2f);
 
 			// After waiting we reset the game
 			yield return new WaitForSeconds(1.2f);
+			
+
 
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
