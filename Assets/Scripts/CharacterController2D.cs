@@ -212,7 +212,7 @@ public class CharacterController2D : MonoBehaviour {
 		_transform.localScale = localScale;
 	}
 
-	// Si el jugador recolecta baterías o tuercas
+	// Si el jugador recolecta baterías o tuercas o manzanas
 	private void OnTriggerEnter2D(Collider2D other)
     {
 		if (other.gameObject.CompareTag("Batery") && !isDead)
@@ -229,7 +229,37 @@ public class CharacterController2D : MonoBehaviour {
 			_audio.PlayOneShot(coinSFX, 0.5f);
 			Destroy(other.gameObject);
 		}
+		//Collect Apple
+		if (other.gameObject.CompareTag("Apple"))
+		{
+			Debug.Log("Toca a la manzana");
+			CollectApple(2);
+			Destroy(other.gameObject);
+		}
 
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.name == "Suelo Falso")
+		{
+			StartCoroutine(KillPlayer());
+		}
+	}
+
+	private void CollectApple(int apple)
+	{
+		if (currentHealth == 10)
+		{
+			//Player is get life
+			healthBar.SetHealth(currentHealth);
+		}
+		else
+		{
+			playerHealth += apple;
+			currentHealth += apple;
+			healthBar.SetHealth(currentHealth);
+		}
 	}
 
 	//The player enter in knockback-------------------------------------------------------------------------------------------------------
