@@ -25,6 +25,9 @@ public class PlayerCombat : MonoBehaviour
 
     private CharacterController2D pc;
 
+    AudioSource _audio;
+    public AudioClip hitSFX;
+
     private void Update()
     {
         CheckCombatInput();
@@ -34,7 +37,8 @@ public class PlayerCombat : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        anim.SetBool("canAttack", combatEnabled);
+        _audio = GetComponent<AudioSource>();
+        anim.SetBool("canAttack", combatEnabled);      
 
         pc = GetComponent<CharacterController2D>();
     }
@@ -65,6 +69,9 @@ public class PlayerCombat : MonoBehaviour
                 anim.SetBool("attack1", true);
                 anim.SetBool("firstAttack", isFirstAttack);
                 anim.SetBool("isAttacking", isAttacking);
+
+                //Play hit sound
+                _audio.PlayOneShot(hitSFX, 0.5f);
             }
         }
         if (Time.time >= lastInputTime + inputTimer)

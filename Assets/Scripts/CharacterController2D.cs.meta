@@ -7,10 +7,10 @@ MonoImporter:
   - healthBar: {instanceID: 0}
   - energyBar: {instanceID: 0}
   - groundCheck: {instanceID: 0}
-  - coinSFX: {instanceID: 0}
+  - coinSFX: {fileID: 8300000, guid: 3505278280ea96b46aafd6bbf4ab0999, type: 3}
   - deathSFX: {fileID: 8300000, guid: e8093eb47f8f0b041b5384540de4e1a0, type: 3}
-  - fallSFX: {instanceID: 0}
-  - jumpSFX: {instanceID: 0}
+  - hurtSFX: {fileID: 8300000, guid: 497b94ab8ea4be647beac19ca2d97458, type: 3}
+  - jumpSFX: {fileID: 8300000, guid: 5115f091fe7b60b459ea960349d79650, type: 3}
   - victorySFX: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}

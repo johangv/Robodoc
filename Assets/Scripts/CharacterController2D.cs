@@ -40,7 +40,7 @@ public class CharacterController2D : MonoBehaviour {
 	// SFXs
 	public AudioClip coinSFX;
 	public AudioClip deathSFX;
-	public AudioClip fallSFX;
+	public AudioClip hurtSFX;
 	public AudioClip jumpSFX;
 	public AudioClip victorySFX;
 
@@ -155,6 +155,9 @@ public class CharacterController2D : MonoBehaviour {
 			_vy = 0f;
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
+
+			//Play jump sound
+			_audio.PlayOneShot(jumpSFX);
 		}
 	
 		// If the player stops jumping mid jump and player is not yet falling
@@ -215,6 +218,7 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.CompareTag("Batery") && !isDead)
 		{
 			Debug.Log("Toca a la batería");
+			_audio.PlayOneShot(coinSFX, 0.5f);
 			chargeEnergy(20);
 			Destroy(other.gameObject);
 		}
@@ -222,6 +226,7 @@ public class CharacterController2D : MonoBehaviour {
 		if (other.gameObject.CompareTag("Nut") && !isDead)
 		{
 			Debug.Log("Toca a la tuerca");
+			_audio.PlayOneShot(coinSFX, 0.5f);
 			Destroy(other.gameObject);
 		}
 
@@ -255,6 +260,8 @@ public class CharacterController2D : MonoBehaviour {
 			StartCoroutine(FlashRed());
 			//So the player lost live
 			ApplyDamage(touchDamage);
+			//Play hurt sound
+			_audio.PlayOneShot(hurtSFX, 0.3f);
 		}
 		
         if(currentHealth <= 0){
@@ -299,6 +306,9 @@ public class CharacterController2D : MonoBehaviour {
 			// play the death animation
 			_animator.SetBool("isDeadd", isDead);
 			_animator.SetTrigger("isDead");
+
+			//Play the death sound
+			_audio.PlayOneShot(deathSFX, 0.2f);
 
 			// After waiting we reset the game
 			yield return new WaitForSeconds(1.5f);

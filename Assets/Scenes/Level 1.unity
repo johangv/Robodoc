@@ -1570,10 +1570,30 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 842722372}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: coinSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 3505278280ea96b46aafd6bbf4ab0999, type: 3}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: deathSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: e8093eb47f8f0b041b5384540de4e1a0, type: 3}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: hurtSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 497b94ab8ea4be647beac19ca2d97458, type: 3}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: jumpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 5115f091fe7b60b459ea960349d79650, type: 3}
     - target: {fileID: 1910889730, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
       propertyPath: attack1Damage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1910889730, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: hitSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 8c328a03b5b9ee049b8103be359bcfbd, type: 3}
     - target: {fileID: 489630001648573412, guid: 2063864d953c61b43becc7d18d4d8663,
         type: 3}
       propertyPath: m_Name

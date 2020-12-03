@@ -3,7 +3,9 @@ guid: 7fc329d764039c04a8e32c0f6b0f898e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - attack1HitBoxPos: {instanceID: 0}
+  - hitSFX: {fileID: 8300000, guid: 8c328a03b5b9ee049b8103be359bcfbd, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
