@@ -241,7 +241,7 @@ public class CharacterController2D : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.name == "Suelo Falso")
+		if (collision.gameObject.name == "SueloFalso")
 		{
 			StartCoroutine(KillPlayer());
 		}
