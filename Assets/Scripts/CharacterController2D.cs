@@ -43,6 +43,7 @@ public class CharacterController2D : MonoBehaviour {
 	public AudioClip jumpSFX;
 	public AudioClip hurtSFX;
 	public AudioClip victorySFX;
+	public AudioClip walkSFX;
 
 
 
@@ -111,6 +112,7 @@ public class CharacterController2D : MonoBehaviour {
 
 	}
 
+
     // this is where most of the player controller magic happens each game event loop
     void Update()
 	{
@@ -127,12 +129,21 @@ public class CharacterController2D : MonoBehaviour {
 		if (_vx != 0) 
 		{
 			isRunning = true;
+		
 		} else {
 			isRunning = false;
 		}
 
 		// set the running animation state
 		_animator.SetBool("Running", isRunning);
+
+		// play walking sound
+	/*	_audio.Stop();
+		_audio.loop = true;
+		_audio.clip = walkSFX;
+		_audio.Play();*/
+		//_audio.PlayOneShot(walkSFX);
+
 
 		// get the current vertical velocity from the rigidbody component
 		_vy = _rigidbody.velocity.y;

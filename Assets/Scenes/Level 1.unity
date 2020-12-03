@@ -1629,7 +1629,11 @@ PrefabInstance:
     - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
       propertyPath: hurtSFX
       value: 
-      objectReference: {fileID: 8300000, guid: 497b94ab8ea4be647beac19ca2d97458, type: 3}
+      objectReference: {fileID: 8300000, guid: 27b9be6243ee71a4bbeeb85b51176f16, type: 3}
+    - target: {fileID: 16878584, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
+      propertyPath: walkSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 06942d7187c1f3e479f5f05ec7f6a00e, type: 3}
     - target: {fileID: 1910889730, guid: 2063864d953c61b43becc7d18d4d8663, type: 3}
       propertyPath: attackSFX
       value: 
