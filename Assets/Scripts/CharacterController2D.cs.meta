@@ -3,7 +3,15 @@ guid: d22119eb91e677a45b4262837f42428c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthBar: {instanceID: 0}
+  - energyBar: {instanceID: 0}
+  - groundCheck: {instanceID: 0}
+  - coinSFX: {instanceID: 0}
+  - deathSFX: {fileID: 8300000, guid: e8093eb47f8f0b041b5384540de4e1a0, type: 3}
+  - fallSFX: {instanceID: 0}
+  - jumpSFX: {instanceID: 0}
+  - victorySFX: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
